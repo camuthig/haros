@@ -42,3 +42,12 @@ This is a package to create a thin wrapper around [Rocky proxy](https://github.c
 	...
 	
 	```
+## Future Improvements and To Do's
+
+1. Get some unit tests in there
+1. Add Consul support for forwarded services
+1. Add metrics tracking
+1. Add throttling
+1. Add circuit breaking, retry and other behaviors great for forwarding to microservices
+1. Add access control for forwarded services (meh, not sure I like this idea)
+1. Clean up real time forwarding information (currently in memory, but that doesn't scale horizontally)
