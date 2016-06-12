@@ -32,6 +32,10 @@ This is a package to create a thin wrapper around [Rocky proxy](https://github.c
 	// YOU WANT TO BE SURE THE REQUEST IS UNALTERED BEFORE PASSING IT ALONG
 	app.use(haros.forward);
 	
+	// Add the body parsing only for locally handled APIs
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	
 	// Add the routes for managing services
 	app.use('/services', passport.authenticate('jwt', { session: false}), haros.routes());
 	
