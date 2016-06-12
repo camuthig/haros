@@ -1,0 +1,23 @@
+{
+  "name": "haros",
+  "version": "0.1.0",
+  "description": "A package for managing an API gateway server.",
+  "main": "./lib/gateway.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "gateway"
+  ],
+  "author": "Chris Muthig",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jsonwebtoken": "^7.0.0",
+    "lodash": "^4.13.1",
+    "mongoose": "^4.4.20",
+    "rocky": "^0.4.12",
+    "validate.js": "^0.10.0"
+  }
+}
