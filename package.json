@@ -4,7 +4,7 @@
   "description": "A package for managing an API gateway server.",
   "main": "./dist/gateway.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run compile; NODE_ENV=test NODE_CONFIG_DIR=test/config/ ./node_modules/.bin/mocha test/spec/services.js --compilers js:babel-register",
     "compile": "./node_modules/.bin/babel --presets es2015 lib -d dist",
     "compile:watch": "watch 'npm run compile' lib"
   },

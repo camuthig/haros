@@ -1,4 +1,5 @@
 import {SpecRunner} from '../specRunner';
+import {NotFoundError} from '../../lib/gateway/error/gateway';
 
 let chai = require('chai'),
     chaiHttp = require('chai-http'),
@@ -39,8 +40,18 @@ describe('Services', () => {
     chai.request(runner.getApp())
       .get('/services/5767475d4f132cbaca88686c')
       .end(function(err, res){
-        res.should.have.status(404);
-        res.body.should.be.empty;
+        err.should.have.status(404);
+        err.should.have.property('message');
+        done();
+      });
+  });
+
+  it('should return a 404 when an invalid ID is given on /services/:id GET', (done) => {
+    chai.request(runner.getApp())
+      .get('/services/blah')
+      .end(function(err, res){
+        err.should.have.status(404);
+        err.should.have.property('message');
         done();
       });
   });

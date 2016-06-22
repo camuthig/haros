@@ -28,10 +28,6 @@ export class AppFactory {
     */
     app.use('/services', haros.routes());
 
-    app.use((err, req, res, next) => {
-      res.status(err.status).end();
-    });
-
     return app;
   }
 }
