@@ -101,7 +101,49 @@ describe('Services', () => {
       });
   });
 
-  it('should update an existing service on /services/:id PATCH', () => {
+  it('should return no content on a reload', (done) => {
+    chai.request(runner.getApp())
+      .get('/services/reload')
+      .end(function(err, res){
+        res.should.have.status(204);
+        res.body.should.be.empty;
+        done();
+      });
+  });
+
+  it('should create a new Consul based service on /services POST', (done) => {
+    let post = {
+      data: {
+        type: "service",
+        attributes: {
+          name: "Consul Service",
+          type: "CONSUL",
+          base: "myconsul",
+          consul: {
+            servers: ["http://myconsul:8500"],
+            service: 'myserve'
+          }
+        }
+      }
+    };
+    chai.request(runner.getApp())
+      .post('/services')
+      .send(post)
+      .end(function(err, res){
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('id');
+        res.body.data.should.have.property('type');
+        res.body.data.type.should.equal('service');
+        res.body.data.should.have.property('attributes');
+        res.body.data.attributes.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should update an existing service on /services/:id PATCH', (done) => {
     let patch = {
       data: {
         id: "5767475d4f132cbaca88686b",
@@ -115,8 +157,8 @@ describe('Services', () => {
     chai.request(runner.getApp())
       .patch('/services/5767475d4f132cbaca88686b')
       .send(patch)
-      .end(function(err, res){
-        res.should.have.status(201);
+      .end((err, res) => {
+        res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.should.have.property('data');
@@ -125,15 +167,15 @@ describe('Services', () => {
         res.body.data.type.should.equal('service');
         res.body.data.should.have.property('attributes');
         res.body.data.attributes.should.be.a('object');
-        res.body.data.attributes.name.should.be('New Service 1 Updated');
+        res.body.data.attributes.name.should.equal('New Service 1 Updated');
         done();
       });
   });
 
-  it('should return no content on a reload', (done) => {
+  it('should delete an existing service on /services/:id DELETE', (done) => {
     chai.request(runner.getApp())
-      .get('/services/reload')
-      .end(function(err, res){
+      .delete('/services/5767475d4f132cbaca88686b')
+      .end((err, res) => {
         res.should.have.status(204);
         res.body.should.be.empty;
         done();

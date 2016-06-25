@@ -24,10 +24,16 @@ export class AppFactory {
     app.use(bodyParser.urlencoded({ extended: false }));
 
     /*
-      Handling routes for managing the actual services is the job of the gateway service. 
+      Create an access point to our service management routes 
     */
     app.use('/services', haros.routes());
 
     return app;
   }
 }
+
+// TODO create a factory for downstream apps, so we can actually test 
+// forwarding/balancing
+// export class DownstreamFactory {
+
+// }
